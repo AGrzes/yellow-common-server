@@ -3,7 +3,7 @@ import * as PouchDB from 'pouchdb'
 
 export {PouchDB}
 
-const trace = debug('home-requirements:db')
+const trace = debug('yellow-common-server:db')
 
 export const merger = (mergeFunction: (doc, existing) => any) => (db, doc) => {
   return db.put(doc).catch((error) => {
