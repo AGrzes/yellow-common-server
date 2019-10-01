@@ -8,7 +8,7 @@ const trace = debug('yellow-common-server:db')
 export const merger = (mergeFunction: (doc, existing) => any) => (db, doc) => {
   return db.put(doc).catch((error) => {
     if (error.error === 'conflict') {
-      return db.get(error.docId).then(({existing}) => db.put(mergeFunction(doc, existing)))
+      return db.get(error.docId).then((existing) => db.put(mergeFunction(doc, existing)))
     } else {
       throw error
     }
