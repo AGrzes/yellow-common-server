@@ -35,3 +35,40 @@ export const index = (db, designDoc: string, viewName: string , viewFunction?: s
   })
 }
 
+export const propertyIndex = (db, designDoc: string, viewName: string , property?: string) => {
+  if (!property) {
+    property = viewName
+    viewName = designDoc
+  }
+  index(db, designDoc, viewName, `function(doc) {
+    if (doc.${property}) {
+      emit(doc.${property})
+    }
+  }`)
+}
+
+export const relationIndex = (db, designDoc: string, viewName: string , relation?: string) => {
+  if (!relation) {
+    relation = viewName
+    viewName = designDoc
+  }
+  index(db, designDoc, viewName, `function(doc) {
+    if (doc.${relation}) {
+      emit(doc._id, {_id: doc.${relation}})
+    }
+  }`)
+}
+
+export const relationsIndex = (db, designDoc: string, viewName: string , relation?: string) => {
+  if (!relation) {
+    relation = viewName
+    viewName = designDoc
+  }
+  index(db, designDoc, viewName, `function(doc) {
+    if (doc.${relation}) {
+      doc.${relation}.forEach(function(item) {
+        emit(doc._id, {_id: item})
+      })
+    }
+  }`)
+}
