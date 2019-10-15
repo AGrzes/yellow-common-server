@@ -15,3 +15,5 @@ export const listByIndex = <T>(db, query, key: IndexQueryParameters): () => Prom
 export const simpleGet = <T>(db) => (id: string): Promise<T> => db.get(id)
 
 export const simplePut = <T>(db) => (id: string, value: T) => merge(db, {...value, _id: id})
+
+export const simpleDelete = <T>(db) => (id: string): Promise<T> => merge(db, {_deleted: true, _id: id})
