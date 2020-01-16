@@ -43,7 +43,7 @@ export function wrap<T>(arg0: WrappedService<T> | Router, arg1?: WrappedService<
   }
 
   if (config.post) {
-    router.put('/', (request, response) => config.post(request.body)
+    router.post('/', (request, response) => config.post(request.body)
       .then((l) => response.send(l))
       .catch(() => response.status(500).send())
     )
